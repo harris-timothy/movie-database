@@ -15,19 +15,6 @@ public interface Database {
     DatabaseEntry getEntry(int index);
 
     /**
-     * Replaces the database entry at specific index with newEntry.
-     * @param index Integer index in the range [0,database size - 1]
-     * @param newEntry The DatabaseEntry to overwrite
-     */
-    void replaceEntry(int index, DatabaseEntry newEntry);
-
-    /**
-     * Adds newEntry to the end of the database.
-     * @param newEntry Entry to append to the database.
-     */
-    void appendEntry(DatabaseEntry newEntry);
-
-    /**
      * Removes the entry at a specified index.
      * @param index Integer index in the range [0,database size - 1] of the entry to remove.
      */
