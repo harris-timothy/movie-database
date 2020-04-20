@@ -21,11 +21,7 @@ public class Movie extends DatabaseEntry {
      */
     private int rating;
     /**
-     * Approx budget of the motion picture.
-     */
-    private float budget;
-    /**
-     * Approx box office returns of the feature.
+     * Approx box office returns of the feature in millions of USD.
      */
     private float boxOffice;
 
@@ -38,7 +34,6 @@ public class Movie extends DatabaseEntry {
         title = "";
         releaseDate = new Date();
         rating = 0;
-        budget = 0.0f;
         boxOffice = 0.0f;
     }
 
@@ -47,15 +42,13 @@ public class Movie extends DatabaseEntry {
      * @param newTitle Title of the film.
      * @param newDate Release date.
      * @param newRating Rating in the range [0,50], represents a 0-5 star rating with one decimal point (so a rating of 35 corresponds to 3.5 stars).
-     * @param newBudget Float for approx budget.
      * @param newBoxOffice Float for approx box office.
      */
-    public Movie(String newTitle, Date newDate, int newRating, float newBudget, float newBoxOffice) {
+    public Movie(String newTitle, Date newDate, int newRating, float newBoxOffice) {
         super();
         title = newTitle;
         releaseDate = newDate;
         rating = newRating;
-        budget = newBudget;
         boxOffice = newBoxOffice;
     }
 
@@ -107,21 +100,6 @@ public class Movie extends DatabaseEntry {
         rating = newRating;
     }
 
-    /**
-     * Returns the approx budget of the film.
-     * @return The approx budget.
-     */
-    public float getBudget() {
-        return budget;
-    }
-
-    /**
-     * Sets a new budget for the film.
-     * @param newBudget The new budget.
-     */
-    public void setBudget(float newBudget) {
-        budget = newBudget;
-    }
 
     /**
      * Gets the approx box office returns for this film.
