@@ -1,6 +1,9 @@
 # Ignore the .idea IDE directory
 .idea/
 
+# Ignore compiler output directory
+out/
+
 # Ignore iml files
 *.iml
 
