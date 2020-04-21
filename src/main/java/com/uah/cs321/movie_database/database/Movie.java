@@ -1,4 +1,4 @@
-package com.uah.cs321.movie_database.database;
+package main.java.com.uah.cs321.movie_database.database;
 
 /**
  * DatabaseEntry class for the movie database.

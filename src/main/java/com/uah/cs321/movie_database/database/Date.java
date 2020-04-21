@@ -1,4 +1,4 @@
-package com.uah.cs321.movie_database.database;
+package main.java.com.uah.cs321.movie_database.database;
 
 /**
  * Small class just used to store date information.
