@@ -7,7 +7,7 @@ package main.java.com.uah.cs321.main;
 
 /**
  *
- * @author gamin
+ * @author Tim Harris
  */
 public class MovieDatabase {
 
