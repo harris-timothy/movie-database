@@ -1,6 +1,3 @@
-# Ignore the .idea IDE directory
-.idea/
-
 # Ignore compiler output directory
 out/
 
@@ -21,3 +18,4 @@ out/
 *.zip
 *.tar.gz
 *.rar
+/build/
