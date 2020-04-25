@@ -28,24 +28,20 @@ import main.java.com.uah.cs321.movie_database.database.MovieDatabase;
  */
 public class realGUIMaybe {
     public static void main(String[] args){
-//---------------------------------------------------------------------------------
-        //Declarations
+  //Declarations
         String path = System.getProperty("user.dir");
         String pathSep = File.separator + "src" + File.separator + "main" + File.separator + "resources" + File.separator;
         String fileName = "MovieDataTrimmed.csv";
         String finalFile = path  + pathSep + fileName;
         System.out.println(finalFile);
         MovieDatabase moviesObj = new MovieDatabase();
+        JList movieList = new JList(moviesObj.arr.toArray(new String[0]));
         /*   try {
                 moviesObj.populate(finalFile);
             } catch (FileNotFoundException ex) {
                 Logger.getLogger(realGUIMaybe.class.getName()).log(Level.SEVERE, null, ex);
-            }*/
-        JList movieList = new JList(moviesObj.arr.toArray(new String[0]));
-        movieList.setBounds(20, 15, 300, 300);
-        
-
-        
+        }*/
+//--------------------------------------------------------------------------------- 
         JFrame mainFrame = new JFrame("Main Frame");
         JFrame descriptionFrame = new JFrame("Movie Description");
         JFrame searchResultsFrame = new JFrame("Search Results");
@@ -54,8 +50,10 @@ public class realGUIMaybe {
         JPanel searchPanel = new JPanel();
         JLabel mainLabel = new JLabel();
         JLabel textLabel = new JLabel();
+        JLabel searchLabel = new JLabel();
         JTextField mainTextField= new JTextField(50);
         JButton searchButton = new JButton("GO");
+        JButton quitButton = new JButton("QUIT");
         mainPanel.setLayout(null);
         Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
         int height = screenSize.height;
@@ -64,13 +62,37 @@ public class realGUIMaybe {
         mainFrame.setResizable(false);
         descriptionFrame.setResizable(false);
         searchResultsFrame.setResizable(false);
+        searchButton.setBackground(Color.white);
+        mainPanel.setBorder(BorderFactory.createLineBorder(Color.black));
+        movieList.setBorder(BorderFactory.createLineBorder(Color.black));
 //---------------------------------------------------------------------------------
-        //Main window components
+        mainFrame.setContentPane(mainPanel);
+        searchResultsFrame.setContentPane(searchPanel);
+        descriptionFrame.setContentPane(descriptionPanel);
+        searchPanel.add(searchLabel);
+        //mainPanel.add(scrollPane);
+        searchPanel.add(quitButton);
+        mainPanel.add(movieList);
+        mainPanel.add(searchButton);
+        mainPanel.add(mainLabel);
+        mainPanel.add(textLabel);
+	mainPanel.add(mainTextField);
+        mainPanel.add(searchButton);
+        mainFrame.getContentPane().setBackground(Color.lightGray);
+        descriptionFrame.getContentPane().setBackground(Color.lightGray);
+        searchResultsFrame.getContentPane().setBackground(Color.lightGray);
+        mainFrame.setDefaultCloseOperation(mainFrame.EXIT_ON_CLOSE);
+        mainFrame.setSize(width/2, height/2);
+        mainFrame.setLocationRelativeTo(null);
+        mainFrame.setVisible(true);
+//---------------------------------------------------------------------------------
 	mainLabel.setBounds(400, 0, 100, 60);
 	textLabel.setBounds(100, 110, 200, 100);
         searchButton.setBounds(550, 20, 60, 20);
 	mainTextField.setBounds(450, 20, 100, 20); 
-        
+        movieList.setBounds(20, 15, 300, 300);
+        quitButton.setBounds(550, 20, 60, 20);
+ //--------------------------------------------------------------------------------- 
         mainTextField.addKeyListener(new KeyAdapter() {
             public void keyPressed(KeyEvent e) {
                 if(e.getKeyCode() == KeyEvent.VK_ENTER){
@@ -78,13 +100,21 @@ public class realGUIMaybe {
                     System.out.println(text);
                 }
             }
-        }); 
+        });
+//--------------------------------------------------------------------------------- 
         searchButton.addActionListener(e->{
            searchResultsFrame.setDefaultCloseOperation(searchResultsFrame.DISPOSE_ON_CLOSE);
            searchResultsFrame.setSize(width/2, height/2);
            searchResultsFrame.setLocationRelativeTo(null);
            searchResultsFrame.setVisible(true);
+           searchLabel.setText("RESULTS...");
+           searchLabel.setBounds(10, 0, 100, 60);
         });
+//--------------------------------------------------------------------------------- 
+        quitButton.addActionListener(e->{
+                searchResultsFrame.dispose();
+        });
+//--------------------------------------------------------------------------------- 
           /* searchButton.addActionListener(new ActionListener(){
             //this is anonymous class
             public void actionPerformed(ActionEvent evt){
@@ -98,20 +128,6 @@ public class realGUIMaybe {
           }
         });
         */
-        mainFrame.setContentPane(mainPanel);
-        //mainPanel.add(scrollPane);
-        mainPanel.add(movieList);
-        mainPanel.add(searchButton);
-        mainPanel.add(mainLabel);
-        mainPanel.add(textLabel);
-	mainPanel.add(mainTextField);
-        mainPanel.add(searchButton);
-        mainFrame.getContentPane().setBackground(Color.lightGray);
-        mainFrame.setDefaultCloseOperation(mainFrame.EXIT_ON_CLOSE);
-        mainFrame.setSize(width/2, height/2);
-        mainFrame.setLocationRelativeTo(null);
-        mainFrame.setVisible(true);
-    
     //private void jTextField1KeyPressed(java.awt.event.KeyEvent evt) {
     //if(evt.getKeyCode() == KeyEvent.VK_ENTER) {
       // Enter was pressed. Your code goes here.
