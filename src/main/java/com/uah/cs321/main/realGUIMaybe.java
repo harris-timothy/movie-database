@@ -36,7 +36,7 @@ public class realGUIMaybe {
         String finalFile = path  + pathSep + fileName;
         System.out.println(finalFile);
         MovieDatabase moviesObj = new MovieDatabase();
-        /*    try {
+        /*   try {
                 moviesObj.populate(finalFile);
             } catch (FileNotFoundException ex) {
                 Logger.getLogger(realGUIMaybe.class.getName()).log(Level.SEVERE, null, ex);
@@ -78,16 +78,13 @@ public class realGUIMaybe {
                     System.out.println(text);
                 }
             }
-        });
-        
-       
+        }); 
         searchButton.addActionListener(e->{
            searchResultsFrame.setDefaultCloseOperation(searchResultsFrame.DISPOSE_ON_CLOSE);
            searchResultsFrame.setSize(width/2, height/2);
            searchResultsFrame.setLocationRelativeTo(null);
            searchResultsFrame.setVisible(true);
         });
-        
           /* searchButton.addActionListener(new ActionListener(){
             //this is anonymous class
             public void actionPerformed(ActionEvent evt){
@@ -95,18 +92,15 @@ public class realGUIMaybe {
                 mainTextField.setText(text);
                 System.out.println(text);
             }
-
           @Override
           public void actionPerformed(java.awt.event.ActionEvent e) {
               throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
           }
         });
         */
-
-        
         mainFrame.setContentPane(mainPanel);
         //mainPanel.add(scrollPane);
-        //mainPanel.add(movieList);
+        mainPanel.add(movieList);
         mainPanel.add(searchButton);
         mainPanel.add(mainLabel);
         mainPanel.add(textLabel);
