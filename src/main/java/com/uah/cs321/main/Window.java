@@ -20,13 +20,17 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+
 import javax.imageio.ImageIO;
+
+import javafx.event.ActionEvent;
+
 import javax.swing.*;
 import main.java.com.uah.cs321.movie_database.database.MovieDatabase;
 /**
  * @author 9abrewer
  */
-public class realGUIMaybe {
+public class Window {
     public static void main(String[] args){
 //---------------------------------------------------------------------------------
         //Declarations
