@@ -10,8 +10,11 @@ import java.awt.Toolkit;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import javafx.event.ActionEvent;
 import javax.swing.*;
+import main.java.com.uah.cs321.movie_database.database.MovieDatabase;
 
 
 /**
@@ -29,6 +32,12 @@ public class realGUIMaybe {
     public static void main(String[] args){
 //---------------------------------------------------------------------------------
         //Declarations
+        
+        String path = System.getProperty("user.dir");
+        System.out.println(path);
+        MovieDatabase moviesObj = new MovieDatabase();
+        //MovieDatabase.populate(pathToFile);
+        JList movieList = new JList(moviesObj.arr.toArray(new String[0]));
         JFrame mainFrame = new JFrame("Main Frame");
         JFrame descriptionFrame = new JFrame("Movie Description");
         JFrame searchResultsFrame = new JFrame("Search Results");
@@ -44,6 +53,8 @@ public class realGUIMaybe {
         JLabel mainLabel = new JLabel();		
         mainLabel.setText("Enter Name :");
 	mainLabel.setBounds(10, 10, 100, 100);
+        movieList.setBounds(20, 10, 300, 300);
+        
         JLabel textLabel = new JLabel();
 	textLabel.setBounds(100, 110, 200, 100);
 	
