@@ -14,7 +14,7 @@ public class MovieDatabase implements Database {
     /**
      * Storage for database.
      */
-    private ArrayList<Movie> arr;
+    public ArrayList<Movie> arr;
     private DatabaseLoader loader;
 
 
