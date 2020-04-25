@@ -23,7 +23,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javafx.event.ActionEvent;
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import main.java.com.uah.cs321.movie_database.database.MovieDatabase;
