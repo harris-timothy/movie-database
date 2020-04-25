@@ -102,21 +102,7 @@ public class Date {
     @Override
     public String toString() {
         String out = "";
-        if (month == -1) {
-            out += "-/";
-        } else {
-            out += month + "/";
-        }
-        if (day == -1) {
-            out += "-/";
-        } else {
-            out += day + "/";
-        }
-        if (year == -1) {
-            out += "-";
-        } else {
-            out += year;
-        }
+        out += year;
         return out;
     }
 

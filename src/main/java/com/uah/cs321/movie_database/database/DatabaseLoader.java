@@ -15,6 +15,7 @@ public class DatabaseLoader {
      * The scanner used for reading the files, this is necessary for keeping the place in the file.
      */
     private Scanner input;
+    private int linenum = 1;
 
     /**
      * Opens a file and begins reading. This will not return any objects. Rather, it is needed for nextEntry to work().
@@ -35,18 +36,47 @@ public class DatabaseLoader {
             return null;
         }
         if (input.hasNextLine()) {
+            System.out.print(linenum++ + ": ");
             String line = input.nextLine();
             Movie out = new Movie();
             Scanner data = new Scanner(line);
             data.useDelimiter(",");
-            out.setTitle(data.next());
+            // Check to see if title is in quotation marks
+            String temp = data.next();
+            String title;
+            if (temp.charAt(0) == '"') {
+                // Title may contain a comma, so use quotation marks as the delimiter
+                data = new Scanner(line);
+                data.useDelimiter("\"");
+                title = data.next();
+                data.useDelimiter(",");
+                data.next();
+            } else {
+                // Title isn't in quotation marks
+                data = new Scanner(line);
+                data.useDelimiter(",");
+                title = data.next();
+            }
+            out.setTitle(title);
+            System.out.print(title + ", ");
             Date dt = new Date();
             dt.setYear(data.nextInt());
             out.setDate(dt);
-            float rating = data.nextFloat();
-            rating *= 5;
+            System.out.print(dt.toString() + ", ");
+            float rating = -1.0f;
+            if (data.hasNextFloat()) {
+                rating = data.nextFloat();
+                rating *= 5;
+                rating = Math.round(rating);
+            }
             out.setRating(Math.round(rating));
-            out.setBoxOffice(data.nextFloat());
+            System.out.print(Math.round(rating) + ", ");
+            float bo = -1.0f;
+            if (data.hasNextFloat()) {
+                bo = data.nextFloat();
+            }
+            out.setBoxOffice(bo);
+            System.out.println(bo);
             return out;
         }
         return null;
