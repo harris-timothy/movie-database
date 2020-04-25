@@ -13,21 +13,25 @@ import java.awt.Toolkit;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.IOException;
 import static java.lang.Boolean.FALSE;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.event.ActionEvent;
+import javax.imageio.ImageIO;
 import javax.swing.*;
 import main.java.com.uah.cs321.movie_database.database.MovieDatabase;
 /**
  * @author 9abrewer
  */
 public class realGUIMaybe {
-    public static void main(String[] args){
+    public static void main(String[] args) throws IOException{
 //---------------------------------------------------------------------------------
         //Declarations
         String path = System.getProperty("user.dir");
@@ -43,8 +47,6 @@ public class realGUIMaybe {
             }
         JList movieList = new JList(moviesObj.arr.toArray(new String[0]));
         movieList.setBounds(20, 15, 300, 300);
-        
-
         
         JFrame mainFrame = new JFrame("Main Frame");
         JFrame descriptionFrame = new JFrame("Movie Description");
@@ -103,10 +105,11 @@ public class realGUIMaybe {
         });
         */
 
-        
+       
+          
         mainFrame.setContentPane(mainPanel);
         //mainPanel.add(scrollPane);
-        //mainPanel.add(movieList);
+        mainPanel.add(movieList);
         mainPanel.add(searchButton);
         mainPanel.add(mainLabel);
         mainPanel.add(textLabel);

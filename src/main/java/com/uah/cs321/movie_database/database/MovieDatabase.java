@@ -44,6 +44,7 @@ public class MovieDatabase implements Database {
         loader.openFile(filePath);
         Movie data = loader.nextEntry();
         while (data != null) {
+            System.out.println("DEBUG");
             arr.add(data);
             data = loader.nextEntry();
         }
