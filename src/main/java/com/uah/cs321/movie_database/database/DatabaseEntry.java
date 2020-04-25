@@ -1,4 +1,4 @@
-package main.java.com.uah.cs321.movie_database.database;
+package com.uah.cs321.movie_database.database;
 
 /**
  * Abstract class for a database object for use with a Database implementing the relevant interface.

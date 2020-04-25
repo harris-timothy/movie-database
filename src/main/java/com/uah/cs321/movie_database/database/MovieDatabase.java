@@ -1,4 +1,4 @@
-package main.java.com.uah.cs321.movie_database.database;
+package com.uah.cs321.movie_database.database;
 
 import java.io.FileNotFoundException;
 import java.lang.reflect.Array;

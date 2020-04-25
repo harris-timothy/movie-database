@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package main.java.com.uah.cs321.main;
+package com.uah.cs321.main;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Container;
@@ -22,7 +22,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.imageio.ImageIO;
 import javax.swing.*;
-import main.java.com.uah.cs321.movie_database.database.MovieDatabase;
+import com.uah.cs321.movie_database.database.MovieDatabase;
 /**
  * @author 9abrewer
  */
