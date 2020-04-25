@@ -36,11 +36,11 @@ public class realGUIMaybe {
         String finalFile = path  + pathSep + fileName;
         System.out.println(finalFile);
         MovieDatabase moviesObj = new MovieDatabase();
-            try {
+        /*    try {
                 moviesObj.populate(finalFile);
             } catch (FileNotFoundException ex) {
                 Logger.getLogger(realGUIMaybe.class.getName()).log(Level.SEVERE, null, ex);
-            }
+            }*/
         JList movieList = new JList(moviesObj.arr.toArray(new String[0]));
         movieList.setBounds(20, 15, 300, 300);
         
