@@ -66,21 +66,13 @@ public class realGUIMaybe {
         JButton searchButton = new JButton("GO");
         JButton quitButton = new JButton("QUIT");
         mainPanel.setLayout(null);
+        JScrollPane scrollPane = new JScrollPane(movieList);
         Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
         int height = screenSize.height;
+        scrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
+        scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
         
-        //WTF is that
-        //oh my god
-        //what are these lines for?
-        //movieList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-        //movieList.setVisibleRowCount(10);
-        /*JScrollPane scrollPane = new JScrollPane(movieList);
-        scrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
-        scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
-        scrollPane.setBounds(50, 30, 300, 50);
-        */
         
-        //scrollPane.add(movieList);
         mainFrame.setResizable(false);
         descriptionFrame.setResizable(false);
         searchResultsFrame.setResizable(false);
@@ -92,23 +84,11 @@ public class realGUIMaybe {
         searchResultsFrame.setContentPane(searchPanel);
         descriptionFrame.setContentPane(descriptionPanel);
         searchPanel.add(searchLabel);
-        //mainPanel.add(scrollPane);
         searchPanel.add(quitButton);
-        mainPanel.add(movieList);
-  
-       /* JScrollPane scrollPane = new JScrollPane();
-        scrollPane.setViewportView(movieList);
-        movieList.setLayoutOrientation(JList.VERTICAL);
-        //you add to panes/panels
-        */
-       JScrollPane scrollPane = new JScrollPane();
-        mainFrame.getContentPane().add(scrollPane);
-        mainPanel.add(scrollPane);
-        mainPanel.add(searchButton);
-        mainPanel.add(mainLabel);
-        mainPanel.add(textLabel);
-	mainPanel.add(mainTextField);
-        mainPanel.add(searchButton);
+        
+        mainFrame.add(scrollPane);
+
+       
         mainFrame.getContentPane().setBackground(Color.lightGray);
         descriptionFrame.getContentPane().setBackground(Color.lightGray);
         searchResultsFrame.getContentPane().setBackground(Color.lightGray);
