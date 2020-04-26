@@ -37,6 +37,7 @@ import main.java.com.uah.cs321.movie_database.database.Movie;
  * @author Quen Parson
  */
 public class realGUIMaybe {
+    static int getNum = 0;
     static boolean flipDate = true;
     static boolean flipTitle = true;
     static boolean dateSort = false;
@@ -54,12 +55,10 @@ public class realGUIMaybe {
             moviesObj.populate(finalFile);
         } catch (FileNotFoundException ex) {
             Logger.getLogger(realGUIMaybe.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        
+        } 
         DefaultListModel listModel = new DefaultListModel();
         moviesObj.sortTitle(true); // Default sort by ascending alphabetical order
-        for (int i = 0; i < moviesObj.arr.size(); i++)
-        {
+        for (int i = 0; i < moviesObj.arr.size(); i++){
             listModel.addElement(moviesObj.arr.get(i));
         }
         Movie tempArr[] = new Movie[moviesObj.arr.size()];
@@ -92,8 +91,6 @@ public class realGUIMaybe {
         Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
         int height = screenSize.height;
         searchLabel.setText("RESULTS...");
-       
-        
 //--------------------------------------------------------------------------------- 
         mainFrame.setResizable(false);
         descriptionFrame.setResizable(false);
@@ -102,24 +99,19 @@ public class realGUIMaybe {
         sortDateButton.setBackground(Color.white);
         sortTitleButton.setBackground(Color.white);
         mainPanel.setBorder(BorderFactory.createLineBorder(Color.black));
-        //movieList.setBorder(BorderFactory.createLineBorder(Color.black));
 //---------------------------------------------------------------------------------
         //New button sort stuff (TIM)
-
         sortDateButton.addActionListener(e->{
             moviesObj.sortTitle(true);
-            if(flipDate == true)
-            {
+            if(flipDate == true){
                 moviesObj.sortDate(true);
                 listModel.removeAllElements();
-                for (int i = 0; i < moviesObj.arr.size(); i++)
-                {
+                for (int i = 0; i < moviesObj.arr.size(); i++){
                     listModel.addElement(moviesObj.arr.get(i));
                 }
                 flipDate = false;
             }
-            else
-            {
+            else{
                moviesObj.sortDate(false);
                listModel.removeAllElements();
                 for (int i = 0; i < moviesObj.arr.size(); i++)
@@ -129,34 +121,26 @@ public class realGUIMaybe {
                 flipDate = true;
             }
             titleSort = false;
-            //dateSort = true;
         });
-
         sortTitleButton.addActionListener(e->{
-           if(flipTitle == true)
-            {
+           if(flipTitle == true){
                 moviesObj.sortTitle(false);
                 listModel.removeAllElements();
-                for (int i = 0; i < moviesObj.arr.size(); i++)
-                {
+                for (int i = 0; i < moviesObj.arr.size(); i++){
                     listModel.addElement(moviesObj.arr.get(i));
                 }
                 flipTitle = false;
             }
-           else
-            {
+           else{
                moviesObj.sortTitle(true);
                listModel.removeAllElements();
-                for (int i = 0; i < moviesObj.arr.size(); i++)
-                {
+                for (int i = 0; i < moviesObj.arr.size(); i++){
                     listModel.addElement(moviesObj.arr.get(i));
                 }
                 flipTitle = true;
             }
             dateSort = false;
-            //titleSort = true;
         });
-
 //---------------------------------------------------------------------------------
  
 //---------------------------------------------------------------------------------
@@ -177,29 +161,35 @@ public class realGUIMaybe {
            falseLabel.setBounds(300, 60, 300, 100);
            
 //--------------------------------------------------------------------------------- 
+        ArrayList<Movie> result = new ArrayList<Movie>();
+        
         searchButton.addActionListener(e->{
-         
+           
+           result.clear();
            boolean isFound = false;
            String text = mainTextField.getText();
+           
            System.out.println(text);
-           trueLabel.setText(text + " was found!");
+           
            for(int i = 0; i < tempArr.length; i++ ){
-               //isFound = false;
-               if((tempArr[i].getTitle()).contains(text)){
+
+                   
+               if(tempArr[i].getTitle().toLowerCase().contains(text.toLowerCase())){
+                   result.add(tempArr[i]);
                    isFound = true;
-                   break;
-               }
-           }
-               System.out.println(isFound);
-               if(isFound == true){
-                   searchPanel.remove(falseLabel);
-                   searchPanel.add(trueLabel);
                    
                }
-               else if(isFound == false){
+           }
+           getNum = result.size();
+           trueLabel.setText(getNum + " results found.");
+           
+               System.out.println(isFound);
+              if(isFound == false){
                    searchPanel.remove(trueLabel);
                    searchPanel.add(falseLabel);
                }
+              searchPanel.add(trueLabel);
+              
            searchResultsFrame.setDefaultCloseOperation(searchResultsFrame.DISPOSE_ON_CLOSE);
            searchResultsFrame.setSize(700, 700);
            searchResultsFrame.setLocationRelativeTo(null);
