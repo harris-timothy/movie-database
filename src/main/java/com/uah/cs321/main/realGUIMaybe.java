@@ -75,7 +75,7 @@ public class realGUIMaybe {
         Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
         int height = screenSize.height;
         searchLabel.setText("RESULTS...");
-        falseLabel.setText("0 RESULTS");
+       
         
 //--------------------------------------------------------------------------------- 
         mainFrame.setResizable(false);
@@ -96,30 +96,39 @@ public class realGUIMaybe {
         searchLabel.setBounds(10, 0, 100, 60);
 	mainLabel.setBounds(400, 0, 100, 60);
 	textLabel.setBounds(100, 110, 200, 100);
-        falseLabel.setBounds(100, 110, 200, 100);
         trueLabel.setBounds(300, 50, 300, 100);
         searchButton.setBounds(550, 20, 60, 20);
 	mainTextField.setBounds(450, 20, 100, 20); 
         scrollPane.setBounds(20, 15, 415, 300);
         quitButton.setBounds(550, 20, 60, 20);
+        trueLabel.setText(text + " was found!");
+           trueLabel.setBounds(300, 50, 300, 100);
+           falseLabel.setText("0 RESULTS");
+           falseLabel.setBounds(300, 60, 300, 100);
+           
 //--------------------------------------------------------------------------------- 
         searchButton.addActionListener(e->{
-           String text = mainTextField.getText();
-           trueLabel.setText(text + " was found!");
-           trueLabel.setBounds(300, 50, 300, 100);
-           
+         
            boolean isFound = false;
+           String text = mainTextField.getText();
            System.out.println(text);
+           trueLabel.setText(text + " was found!");
            for(int i = 0; i < tempArr.length; i++ ){
-               if(tempArr[i].getTitle().equals(text)){
+               //isFound = false;
+               if((tempArr[i].getTitle()).equals(text)){
                    isFound = true;
+                   break;
                }
            }
                System.out.println(isFound);
                if(isFound == true){
+                   searchPanel.remove(falseLabel);
                    searchPanel.add(trueLabel);
+                   
+             
                }
-               else{
+               else if(isFound == false){
+                   searchPanel.remove(trueLabel);
                    searchPanel.add(falseLabel);
                }
            searchResultsFrame.setDefaultCloseOperation(searchResultsFrame.DISPOSE_ON_CLOSE);
@@ -127,8 +136,6 @@ public class realGUIMaybe {
            searchResultsFrame.setLocationRelativeTo(null);
            searchResultsFrame.setVisible(true);
         });
-        
-
 //--------------------------------------------------------------------------------- 
         quitButton.addActionListener(e->{
                 searchResultsFrame.dispose();
