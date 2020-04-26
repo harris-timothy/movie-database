@@ -37,7 +37,7 @@ import main.java.com.uah.cs321.movie_database.database.Movie;
  */
 public class realGUIMaybe {
     public static void main(String[] args){
-       String path = System.getProperty("user.dir");
+        String path = System.getProperty("user.dir");
         String pathSep = File.separator + "src" + File.separator + "main" + File.separator + "resources" + File.separator;
         String fileName = "MovieDataTrimmed.csv";
         String finalFile = path  + pathSep + fileName;
