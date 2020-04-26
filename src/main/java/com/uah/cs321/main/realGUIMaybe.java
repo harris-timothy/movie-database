@@ -49,6 +49,7 @@ public class realGUIMaybe {
             Logger.getLogger(realGUIMaybe.class.getName()).log(Level.SEVERE, null, ex);
         }
         Movie tempArr[] = new Movie[moviesObj.arr.size()];
+        moviesObj.sortTitle(true);
         moviesObj.arr.toArray(tempArr);
         JList<Movie> movieList = new JList<Movie>(tempArr);
         //movieList.setBounds(20, 15, 300, 300);
@@ -67,7 +68,6 @@ public class realGUIMaybe {
         JButton quitButton = new JButton("QUIT");
         mainPanel.setLayout(null);
         JScrollPane scrollPane = new JScrollPane(movieList);
-        scrollPane.setBounds(20, 15, 415, 300);
         Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
         int height = screenSize.height;
         //scrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
@@ -81,40 +81,15 @@ public class realGUIMaybe {
         mainPanel.setBorder(BorderFactory.createLineBorder(Color.black));
         //movieList.setBorder(BorderFactory.createLineBorder(Color.black));
 //---------------------------------------------------------------------------------
-        mainFrame.setContentPane(mainPanel);
-        searchResultsFrame.setContentPane(searchPanel);
-        descriptionFrame.setContentPane(descriptionPanel);
-        searchPanel.add(searchLabel);
-        searchPanel.add(quitButton);
-        mainFrame.add(scrollPane);
 
-       
-        mainFrame.getContentPane().setBackground(Color.lightGray);
-        descriptionFrame.getContentPane().setBackground(Color.lightGray);
-        searchResultsFrame.getContentPane().setBackground(Color.lightGray);
-        mainFrame.setDefaultCloseOperation(mainFrame.EXIT_ON_CLOSE);
-        mainFrame.setSize(700, 700);
-        mainFrame.setLocationRelativeTo(null);
-        mainFrame.setVisible(true);
 //---------------------------------------------------------------------------------
         //Main window components
 	mainLabel.setBounds(400, 0, 100, 60);
 	textLabel.setBounds(100, 110, 200, 100);
         searchButton.setBounds(550, 20, 60, 20);
 	mainTextField.setBounds(450, 20, 100, 20); 
-        
-        //movieList.setBounds(20, 15, 300, 300);
+        scrollPane.setBounds(20, 15, 415, 300);
         quitButton.setBounds(550, 20, 60, 20);
- //--------------------------------------------------------------------------------- 
-        /*mainTextField.addKeyListener(new KeyAdapter() {
-            public void keyPressed(KeyEvent e) {
-                if(e.getKeyCode() == KeyEvent.VK_ENTER){
-
-                    System.out.println(text);
-                }
-            }
-        }); 
-        */
 //--------------------------------------------------------------------------------- 
         searchButton.addActionListener(e->{
            searchResultsFrame.setDefaultCloseOperation(searchResultsFrame.DISPOSE_ON_CLOSE);
@@ -129,30 +104,21 @@ public class realGUIMaybe {
                 searchResultsFrame.dispose();
         });
 //--------------------------------------------------------------------------------- 
-          /* searchButton.addActionListener(new ActionListener(){
-            //this is anonymous class
-            public void actionPerformed(ActionEvent evt){
-@ -98,20 +128,6 @@ public class realGUIMaybe {
-          }
-        });
-        */
-        mainFrame.setContentPane(mainPanel);
-        //mainPanel.add(scrollPane);
-        //mainPanel.add(movieList);
-        mainPanel.add(searchButton);
-        mainPanel.add(mainLabel);
-        mainPanel.add(textLabel);
+        
 	mainPanel.add(mainTextField);
         mainPanel.add(searchButton);
+        mainFrame.setContentPane(mainPanel);
+        searchResultsFrame.setContentPane(searchPanel);
+        descriptionFrame.setContentPane(descriptionPanel);
+        searchPanel.add(searchLabel);
+        searchPanel.add(quitButton);
+        mainFrame.add(scrollPane);
         mainFrame.getContentPane().setBackground(Color.lightGray);
+        descriptionFrame.getContentPane().setBackground(Color.lightGray);
+        searchResultsFrame.getContentPane().setBackground(Color.lightGray);
         mainFrame.setDefaultCloseOperation(mainFrame.EXIT_ON_CLOSE);
         mainFrame.setSize(700, 700);
         mainFrame.setLocationRelativeTo(null);
         mainFrame.setVisible(true);
-    
-    //private void jTextField1KeyPressed(java.awt.event.KeyEvent evt) {
-    //if(evt.getKeyCode() == KeyEvent.VK_ENTER) {
-      // Enter was pressed. Your code goes here.
-   //}
 } 
 }
