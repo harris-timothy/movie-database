@@ -37,7 +37,7 @@ import main.java.com.uah.cs321.movie_database.database.Movie;
  */
 public class realGUIMaybe {
     public static void main(String[] args){
-       String path = System.getProperty("user.dir");
+        String path = System.getProperty("user.dir");
         String pathSep = File.separator + "src" + File.separator + "main" + File.separator + "resources" + File.separator;
         String fileName = "MovieDataTrimmed.csv";
         String finalFile = path  + pathSep + fileName;
@@ -49,6 +49,7 @@ public class realGUIMaybe {
             Logger.getLogger(realGUIMaybe.class.getName()).log(Level.SEVERE, null, ex);
         }
         Movie tempArr[] = new Movie[moviesObj.arr.size()];
+        moviesObj.sortTitle(true);
         moviesObj.arr.toArray(tempArr);
         JList<Movie> movieList = new JList<Movie>(tempArr);
         //movieList.setBounds(20, 15, 300, 300);
