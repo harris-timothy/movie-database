@@ -52,8 +52,6 @@ public class realGUIMaybe {
         moviesObj.sortTitle(true);
         moviesObj.arr.toArray(tempArr);
         JList<Movie> movieList = new JList<Movie>(tempArr);
-        //movieList.setBounds(20, 15, 300, 300);
-        
         JFrame mainFrame = new JFrame("Main Frame");
         JFrame descriptionFrame = new JFrame("Movie Description");
         JFrame searchResultsFrame = new JFrame("Search Results");
@@ -66,14 +64,12 @@ public class realGUIMaybe {
         JTextField mainTextField= new JTextField(50);
         JButton searchButton = new JButton("GO");
         JButton quitButton = new JButton("QUIT");
+//---------------------------------------------------------------------------------       
         mainPanel.setLayout(null);
         JScrollPane scrollPane = new JScrollPane(movieList);
         Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
         int height = screenSize.height;
-        //scrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
-        //scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
-        
-        
+//--------------------------------------------------------------------------------- 
         mainFrame.setResizable(false);
         descriptionFrame.setResizable(false);
         searchResultsFrame.setResizable(false);
@@ -81,6 +77,11 @@ public class realGUIMaybe {
         mainPanel.setBorder(BorderFactory.createLineBorder(Color.black));
         //movieList.setBorder(BorderFactory.createLineBorder(Color.black));
 //---------------------------------------------------------------------------------
+        //New button sort stuff (TIM)
+
+
+
+
 
 //---------------------------------------------------------------------------------
         //Main window components
@@ -104,7 +105,6 @@ public class realGUIMaybe {
                 searchResultsFrame.dispose();
         });
 //--------------------------------------------------------------------------------- 
-        
 	mainPanel.add(mainTextField);
         mainPanel.add(searchButton);
         mainFrame.setContentPane(mainPanel);
