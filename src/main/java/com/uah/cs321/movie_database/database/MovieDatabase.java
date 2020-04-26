@@ -99,7 +99,12 @@ public class MovieDatabase implements Database {
         // Swap the arrays.
         arr = newArr;
     }
-
+    
+    /**
+     * @author Tim Harris
+     * Sorts the database by release year.
+     * @param ascending If true, sorts ascending (2016-2006). If false, sorts descending (2006-2016).
+     */
     public void sortDate(boolean descending)
     {
         ArrayList<Movie> newArr = new ArrayList<Movie>();

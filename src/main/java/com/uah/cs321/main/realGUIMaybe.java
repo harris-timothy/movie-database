@@ -18,6 +18,9 @@ import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
+import java.math.BigDecimal;
 import java.io.File;
 import java.io.FileNotFoundException;
 import static java.lang.Boolean.FALSE;
@@ -158,17 +161,40 @@ public class realGUIMaybe {
         JLabel currentYear = new JLabel();
         JLabel currentRating = new JLabel();
         JLabel currentBoxOffice = new JLabel();
+        
         movieList.addMouseListener(new MouseAdapter() {
             public void mouseClicked(MouseEvent evt) {
                 JList list = (JList)evt.getSource();
                 if (evt.getButton() == MouseEvent.BUTTON1 && evt.getClickCount() == 2) {
                     // Double-click detected
                     int index = list.getSelectedIndex();
-                    //System.out.println("double-click");                    
+                    //System.out.println("double-click"); 
+                    float trueRating = (float)moviesObj.arr.get(index).getRating()/10;
+                    BigDecimal accBoxOffice = BigDecimal.valueOf(moviesObj.arr.get(index).getBoxOffice());
+                    int trueBoxOffice = accBoxOffice.multiply(new BigDecimal(100)).intValue() * 10000;
+                    //System.out.println(trueBoxOffice);
+                    String starString = "";
+                    String ratingString = Float.toString(trueRating);
                     currentTitle.setFont(new Font("Arial", Font.BOLD + Font.ITALIC, 24));                   
                     currentTitle.setBounds(10, 0, 500, 60);
                     currentTitle.setText(moviesObj.arr.get(index).getTitle());
+                    currentYear.setFont(new Font("Arial", Font.PLAIN, 18));
+                    currentYear.setBounds(10,25,500,60);
+                    currentYear.setText(moviesObj.arr.get(index).getDate().toString());
+                    for(int i = 0; i < Math.round(trueRating); i++)
+                    {
+                        starString = starString + "*";
+                    }
+                    currentRating.setFont(new Font("Arial", Font.PLAIN, 18));
+                    currentRating.setBounds(10,45,500,60);
+                    currentRating.setText("Rating: " + starString + "(" + ratingString + ")");
+                    currentBoxOffice.setFont(new Font("Arial", Font.PLAIN, 18));
+                    currentBoxOffice.setBounds(10,65,500,60);
+                    currentBoxOffice.setText("Box Office Returns: $" + Integer.toString(trueBoxOffice));
                     descriptionPanel.add(currentTitle);
+                    descriptionPanel.add(currentYear);
+                    descriptionPanel.add(currentRating);
+                    descriptionPanel.add(currentBoxOffice);
                     descriptionFrame.setSize(700,400);
                     descriptionFrame.setLocationRelativeTo(null);
                     descriptionFrame.setVisible(true);                  
@@ -195,7 +221,7 @@ public class realGUIMaybe {
 	mainTextField.setBounds(450, 35, 150, 20); 
         scrollPane.setBounds(20, 60, 415, 535);
         scrollFavorites.setBounds(450, 85, 215, 510);
-        quitButton.setBounds(550, 20, 60, 20);
+        quitButton.setBounds(535, 20, 75, 40);
         trueLabel.setText(text + " was found!");
         trueLabel.setForeground(Color.DARK_GRAY);
         trueLabel.setBounds(300, 575, 300, 100);
@@ -244,6 +270,17 @@ public class realGUIMaybe {
                 searchResultsFrame.dispose();
                 resultsModel.removeAllElements();
         });     
+        
+        // Clears search results from the list model even if the user doesn't use the quit button
+        searchResultsFrame.addWindowListener( new WindowAdapter()
+        {
+            public void windowClosing(WindowEvent e)
+            {
+                searchResultsFrame.dispose();
+                resultsModel.removeAllElements();
+                
+            }
+        });
 //--------------------------------------------------------------------------------- 
         Border blackline = BorderFactory.createLineBorder(Color.black);
         mainPanel.setBorder(blackline);         
