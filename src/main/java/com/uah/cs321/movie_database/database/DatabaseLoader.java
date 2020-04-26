@@ -98,7 +98,7 @@ public class DatabaseLoader {
             // Iterate through array and add everything to file
             for (int i=0; i < arr.size(); i++) {
                 String line = "";
-                line += arr.get(i).getTitle() + ",";
+                line += '"' + arr.get(i).getTitle() + '"' + ",";
                 line += arr.get(i).getDate().getYear() + ",";
                 float temp = (float) arr.get(i).getRating();
                 temp /= 5;
