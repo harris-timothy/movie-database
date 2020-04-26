@@ -9,12 +9,15 @@ import javax.swing.JList;
 import java.awt.Color;
 import java.awt.Container;
 import java.awt.Dimension;
+import java.awt.Font;
 import static java.awt.PageAttributes.MediaType.C;
 import static java.awt.SystemColor.text;
 import java.awt.Toolkit;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.io.File;
 import java.io.FileNotFoundException;
 import static java.lang.Boolean.FALSE;
@@ -27,12 +30,15 @@ import javax.swing.*;
 import static javax.swing.Spring.width;
 import javax.swing.event.ListSelectionEvent;  
 import javax.swing.event.ListSelectionListener; 
+import javax.swing.ListCellRenderer;
+import javax.swing.DefaultListCellRenderer;
 import javax.swing.JScrollPane;
 import main.java.com.uah.cs321.movie_database.database.MovieDatabase;
 import main.java.com.uah.cs321.movie_database.database.Movie;
+
 /**
- * @author Alisa Brewer
  * @author Tim Harris
+ * @author Alisa Brewer
  * @author Riley Arnold
  * @author Quen Parson
  */
@@ -57,6 +63,7 @@ public class realGUIMaybe {
             Logger.getLogger(realGUIMaybe.class.getName()).log(Level.SEVERE, null, ex);
         } 
         DefaultListModel listModel = new DefaultListModel();
+        DefaultListModel favoritesModel = new DefaultListModel();
         DefaultListModel resultsModel = new DefaultListModel();
         moviesObj.sortTitle(true); // Default sort by ascending alphabetical order
         for (int i = 0; i < moviesObj.arr.size(); i++){
@@ -68,6 +75,7 @@ public class realGUIMaybe {
         //JList<Movie> movieList = new JList<Movie>(tempArr);
         JList<Movie> movieList = new JList<Movie>(listModel);
         JList<Movie> resultsList = new JList<Movie>(resultsModel);
+        JList<Movie> favoritesList = new JList<Movie>(favoritesModel);
         JFrame mainFrame = new JFrame("Main Frame");
         JFrame descriptionFrame = new JFrame("Movie Description");
         JFrame searchResultsFrame = new JFrame("Search Results");
@@ -75,24 +83,30 @@ public class realGUIMaybe {
         JPanel mainPanel = new JPanel();
         JPanel searchPanel = new JPanel();
         JLabel mainLabel = new JLabel();
-        JLabel textLabel = new JLabel();
+        JLabel favoritesLabel = new JLabel();
         JLabel falseLabel = new JLabel();
         JLabel trueLabel = new JLabel();
         JLabel searchLabel = new JLabel();
+        JLabel searchPrompt = new JLabel();
         JTextField mainTextField= new JTextField(50);
+        JButton addMovieButton = new JButton("Add Movie");
         JButton searchButton = new JButton("GO");
-        JButton sortDateButton = new JButton("SORT - Date");
+        JButton sortDateButton = new JButton("SORT - Year");
         JButton sortTitleButton = new JButton("SORT - Title");
         JButton quitButton = new JButton("QUIT");
+        
 //---------------------------------------------------------------------------------       
         mainPanel.setLayout(null);
         searchPanel.setLayout(null);
         descriptionPanel.setLayout(null);
         JScrollPane scrollPane = new JScrollPane(movieList);
         JScrollPane scrollResults = new JScrollPane(resultsList);
+        JScrollPane scrollFavorites = new JScrollPane(favoritesList);
         Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
         int height = screenSize.height;
         searchLabel.setText("RESULTS...");
+        searchLabel.setForeground(Color.DARK_GRAY);
+        
 //--------------------------------------------------------------------------------- 
         mainFrame.setResizable(false);
         descriptionFrame.setResizable(false);
@@ -100,7 +114,9 @@ public class realGUIMaybe {
         searchButton.setBackground(Color.white);
         sortDateButton.setBackground(Color.white);
         sortTitleButton.setBackground(Color.white);
+        addMovieButton.setBackground(Color.white);
         mainPanel.setBorder(BorderFactory.createLineBorder(Color.black));
+        
 //---------------------------------------------------------------------------------
         //New button sort stuff (TIM)
         sortDateButton.addActionListener(e->{
@@ -124,6 +140,7 @@ public class realGUIMaybe {
             }
             titleSort = false;
         });
+        
         sortTitleButton.addActionListener(e->{
            if(flipTitle == true){
                 moviesObj.sortTitle(false);
@@ -143,45 +160,80 @@ public class realGUIMaybe {
             }
             dateSort = false;
         });
+        
 //---------------------------------------------------------------------------------
- 
+        JLabel currentTitle = new JLabel();
+        JLabel currentYear = new JLabel();
+        JLabel currentRating = new JLabel();
+        JLabel currentBoxOffice = new JLabel();
+
+        movieList.addMouseListener(new MouseAdapter() {
+            public void mouseClicked(MouseEvent evt) {
+                JList list = (JList)evt.getSource();
+                if (evt.getButton() == MouseEvent.BUTTON1 && evt.getClickCount() == 2) {
+                    // Double-click detected
+                    int index = list.getSelectedIndex();
+                    //System.out.println("double-click");
+                    
+                    currentTitle.setFont(new Font("Arial", Font.BOLD + Font.ITALIC, 24));
+                    
+                    currentTitle.setBounds(10, 0, 500, 60);
+                    currentTitle.setText(moviesObj.arr.get(index).getTitle());
+                    descriptionPanel.add(currentTitle);
+                    descriptionFrame.setSize(700,400);
+                    descriptionFrame.setLocationRelativeTo(null);
+                    descriptionFrame.setVisible(true);
+                    
+                }
+            }
+        });
+        
 //---------------------------------------------------------------------------------
         //Main window components
         searchLabel.setBounds(10, 0, 100, 60);
-	mainLabel.setBounds(400, 0, 100, 60);
-	textLabel.setBounds(100, 110, 200, 100);
+        mainLabel.setText("Movie Database");
+        mainLabel.setForeground(Color.DARK_GRAY);
+        mainLabel.setBounds(20, -5, 100, 60);
+        favoritesLabel.setText("Favorites");
+        favoritesLabel.setForeground(Color.DARK_GRAY);
+	favoritesLabel.setBounds(450, 45, 100, 60);
+        searchPrompt.setText("Search:");
+        searchPrompt.setForeground(Color.DARK_GRAY);
+        searchPrompt.setBounds(450, -5, 100, 60);
         trueLabel.setBounds(300, 50, 300, 100);
-        searchButton.setBounds(550, 20, 60, 20);
-        sortDateButton.setBounds(20, 25, 195, 20);
-        sortTitleButton.setBounds(219, 25, 200, 20);
-	mainTextField.setBounds(450, 20, 100, 20); 
-        scrollPane.setBounds(20, 45, 415, 550);
+        searchButton.setBounds(605, 35, 60, 20);
+        addMovieButton.setBounds(335, 600, 100, 50);
+        sortDateButton.setBounds(20, 35, 195, 20);
+        sortTitleButton.setBounds(219, 35, 200, 20);
+	mainTextField.setBounds(450, 35, 150, 20); 
+        scrollPane.setBounds(20, 60, 415, 535);
+        scrollFavorites.setBounds(450, 85, 215, 510);
         quitButton.setBounds(550, 20, 60, 20);
         trueLabel.setText(text + " was found!");
-           trueLabel.setBounds(300, 575, 300, 100);
-           falseLabel.setText("0 RESULTS");
-           falseLabel.setBounds(300, 60, 300, 100);
+        trueLabel.setForeground(Color.DARK_GRAY);
+        trueLabel.setBounds(300, 575, 300, 100);
+        falseLabel.setText("0 RESULTS");
+        falseLabel.setForeground(Color.DARK_GRAY);
+        falseLabel.setBounds(300, 60, 300, 100);
            
 //--------------------------------------------------------------------------------- 
         ArrayList<Movie> result = new ArrayList<Movie>();
         
         searchButton.addActionListener(e->{
-           
            result.clear();
            boolean isFound = false;
            String text = mainTextField.getText();
            
            System.out.println(text);
            
-           for(int i = 0; i < tempArr.length; i++ ){
-
-                   
+           for(int i = 0; i < tempArr.length; i++ ){ 
                if(tempArr[i].getTitle().toLowerCase().contains(text.toLowerCase())){
                    result.add(tempArr[i]);
                    isFound = true;
                    
                }
            }
+           
             getNum = result.size();
             trueLabel.setText(getNum + " results found.");
            
@@ -209,23 +261,30 @@ public class realGUIMaybe {
             searchResultsFrame.setLocationRelativeTo(null);
             searchResultsFrame.setVisible(true);
         });
+        
 //--------------------------------------------------------------------------------- 
         quitButton.addActionListener(e->{
                 searchResultsFrame.dispose();
                 resultsModel.removeAllElements();
         });
+        
 //--------------------------------------------------------------------------------- 
 	mainPanel.add(mainTextField);
         //searchFrame.add(trueLabel);
         mainPanel.add(searchButton);
+        mainPanel.add(mainLabel);
+        mainPanel.add(favoritesLabel);
         mainPanel.add(sortDateButton);
         mainPanel.add(sortTitleButton);
+        mainPanel.add(searchPrompt);
+        mainPanel.add(addMovieButton);
         mainFrame.setContentPane(mainPanel);
         searchResultsFrame.setContentPane(searchPanel);
         descriptionFrame.setContentPane(descriptionPanel);
         searchPanel.add(searchLabel);
         searchPanel.add(quitButton);
         mainFrame.add(scrollPane);
+        mainFrame.add(scrollFavorites);
         mainFrame.getContentPane().setBackground(Color.lightGray);
         descriptionFrame.getContentPane().setBackground(Color.lightGray);
         searchResultsFrame.getContentPane().setBackground(Color.lightGray);
