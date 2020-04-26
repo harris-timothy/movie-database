@@ -23,14 +23,19 @@ import java.util.logging.Logger;
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import static javax.swing.Spring.width;
+import javax.swing.event.ListSelectionEvent;  
+import javax.swing.event.ListSelectionListener; 
+import javax.swing.JScrollPane;
 import main.java.com.uah.cs321.movie_database.database.MovieDatabase;
 import main.java.com.uah.cs321.movie_database.database.Movie;
 /**
- * @author 9abrewer
+ * @author Alisa Brewer
+ * @author Tim Harris
+ * @author Riley Arnold
+ * @author Quen Parson
  */
 public class realGUIMaybe {
     public static void main(String[] args){
-
        String path = System.getProperty("user.dir");
         String pathSep = File.separator + "src" + File.separator + "main" + File.separator + "resources" + File.separator;
         String fileName = "MovieDataTrimmed.csv";
@@ -62,7 +67,11 @@ public class realGUIMaybe {
         mainPanel.setLayout(null);
         Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
         int height = screenSize.height;
-
+        
+        movieList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+        movieList.setVisibleRowCount(10);
+        JScrollPane scrollPane = new JScrollPane(movieList);
+        
         mainFrame.setResizable(false);
         descriptionFrame.setResizable(false);
         searchResultsFrame.setResizable(false);
@@ -77,6 +86,7 @@ public class realGUIMaybe {
         //mainPanel.add(scrollPane);
         searchPanel.add(quitButton);
         mainPanel.add(movieList);
+        mainPanel.add(scrollPane);
         mainPanel.add(searchButton);
         mainPanel.add(mainLabel);
         mainPanel.add(textLabel);
