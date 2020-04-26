@@ -194,6 +194,7 @@ public class realGUIMaybe {
                 result.toArray(tempResults);
                 scrollResults.setBounds(20, 45, 415, 550);
                 searchResultsFrame.add(scrollResults);
+                searchPanel.remove(falseLabel);
                 searchPanel.add(trueLabel);
             }
             
