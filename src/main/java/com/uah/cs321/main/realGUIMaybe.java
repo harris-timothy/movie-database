@@ -10,6 +10,7 @@ import java.awt.Color;
 import java.awt.Container;
 import java.awt.Dimension;
 import static java.awt.PageAttributes.MediaType.C;
+import static java.awt.SystemColor.text;
 import java.awt.Toolkit;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
@@ -60,6 +61,8 @@ public class realGUIMaybe {
         JPanel searchPanel = new JPanel();
         JLabel mainLabel = new JLabel();
         JLabel textLabel = new JLabel();
+        JLabel falseLabel = new JLabel();
+        JLabel trueLabel = new JLabel();
         JLabel searchLabel = new JLabel();
         JTextField mainTextField= new JTextField(50);
         JButton searchButton = new JButton("GO");
@@ -69,6 +72,9 @@ public class realGUIMaybe {
         JScrollPane scrollPane = new JScrollPane(movieList);
         Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
         int height = screenSize.height;
+        searchLabel.setText("RESULTS...");
+        falseLabel.setText("0 RESULTS");
+        trueLabel.setText(text + "was found.");
 //--------------------------------------------------------------------------------- 
         mainFrame.setResizable(false);
         descriptionFrame.setResizable(false);
@@ -81,25 +87,39 @@ public class realGUIMaybe {
 
 
 
-
-
+//---------------------------------------------------------------------------------
+ 
 //---------------------------------------------------------------------------------
         //Main window components
+        searchLabel.setBounds(10, 0, 100, 60);
 	mainLabel.setBounds(400, 0, 100, 60);
 	textLabel.setBounds(100, 110, 200, 100);
+        falseLabel.setBounds(100, 110, 200, 100);
+        trueLabel.setBounds(100, 110, 200, 100);
         searchButton.setBounds(550, 20, 60, 20);
 	mainTextField.setBounds(450, 20, 100, 20); 
         scrollPane.setBounds(20, 15, 415, 300);
         quitButton.setBounds(550, 20, 60, 20);
 //--------------------------------------------------------------------------------- 
         searchButton.addActionListener(e->{
+           String text = mainTextField.getText();
+           System.out.println(text);
+           for(int i = 0; i < tempArr.length; i++ ){
+               if(tempArr[i].equals(text)){
+                   searchPanel.add(trueLabel);
+               }
+               else{
+                   searchPanel.add(falseLabel);
+               }
+           }
            searchResultsFrame.setDefaultCloseOperation(searchResultsFrame.DISPOSE_ON_CLOSE);
            searchResultsFrame.setSize(700, 700);
            searchResultsFrame.setLocationRelativeTo(null);
            searchResultsFrame.setVisible(true);
-           searchLabel.setText("RESULTS...");
-           searchLabel.setBounds(10, 0, 100, 60);
+
         });
+        
+
 //--------------------------------------------------------------------------------- 
         quitButton.addActionListener(e->{
                 searchResultsFrame.dispose();
