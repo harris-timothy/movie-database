@@ -5,6 +5,7 @@
  */
 package main.java.com.uah.cs321.main;
 import java.awt.BorderLayout;
+import javax.swing.JList;
 import java.awt.Color;
 import java.awt.Container;
 import java.awt.Dimension;
@@ -68,10 +69,18 @@ public class realGUIMaybe {
         Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
         int height = screenSize.height;
         
-        movieList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-        movieList.setVisibleRowCount(10);
-        JScrollPane scrollPane = new JScrollPane(movieList);
+        //WTF is that
+        //oh my god
+        //what are these lines for?
+        //movieList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+        //movieList.setVisibleRowCount(10);
+        /*JScrollPane scrollPane = new JScrollPane(movieList);
+        scrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+        scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
+        scrollPane.setBounds(50, 30, 300, 50);
+        */
         
+        //scrollPane.add(movieList);
         mainFrame.setResizable(false);
         descriptionFrame.setResizable(false);
         searchResultsFrame.setResizable(false);
@@ -86,6 +95,14 @@ public class realGUIMaybe {
         //mainPanel.add(scrollPane);
         searchPanel.add(quitButton);
         mainPanel.add(movieList);
+  
+       /* JScrollPane scrollPane = new JScrollPane();
+        scrollPane.setViewportView(movieList);
+        movieList.setLayoutOrientation(JList.VERTICAL);
+        //you add to panes/panels
+        */
+       JScrollPane scrollPane = new JScrollPane();
+        mainFrame.getContentPane().add(scrollPane);
         mainPanel.add(scrollPane);
         mainPanel.add(searchButton);
         mainPanel.add(mainLabel);
