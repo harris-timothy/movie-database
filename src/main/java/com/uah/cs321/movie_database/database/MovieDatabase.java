@@ -1,4 +1,4 @@
-package com.uah.cs321.movie_database.database;
+package main.java.com.uah.cs321.movie_database.database;
 
 import java.io.FileNotFoundException;
 import java.lang.reflect.Array;
@@ -99,7 +99,38 @@ public class MovieDatabase implements Database {
         // Swap the arrays.
         arr = newArr;
     }
-
+    
+    /**
+     * @author Tim Harris
+     * Sorts the database by release year.
+     * @param ascending If true, sorts ascending (2016-2006). If false, sorts descending (2006-2016).
+     */
+    public void sortDate(boolean descending)
+    {
+        ArrayList<Movie> newArr = new ArrayList<Movie>();
+        // Keep going until main array is empty.
+        while (arr.size() > 0) {
+            // Index of current max or min, depending on sort.
+            int extrema = 0;
+            for (int i=0; i < arr.size(); i++) {
+                // Check sorting method
+                if (descending) {
+                    if (arr.get(extrema).getDate().compareTo(arr.get(i).getDate()) < 0) {
+                        extrema = i;
+                    }
+                } else {
+                    if (arr.get(extrema).getDate().compareTo(arr.get(i).getDate()) > 0) {
+                        extrema = i;
+                    }
+                }
+            }
+            newArr.add(arr.get(extrema));
+            arr.remove(extrema);
+        }
+        // Swap the arrays.
+        arr = newArr;
+    }
+    
     /**
      * Sorts the database by rating.
      * @param ascending If true, sorts ascending (lowest to highest). If false, sorts descending (highest to lowest).

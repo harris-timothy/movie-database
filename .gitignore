@@ -19,3 +19,6 @@ out/
 *.tar.gz
 *.rar
 /build/
+nbproject/private/private.xml
+nbproject/private/private.properties
+/dist/

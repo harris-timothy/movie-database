@@ -1,4 +1,4 @@
-package com.uah.cs321.movie_database.database;
+package main.java.com.uah.cs321.movie_database.database;
 
 /**
  * Interface for a Database object, contains critical method declarations that need implementation for a valid database.
