@@ -100,6 +100,32 @@ public class MovieDatabase implements Database {
         arr = newArr;
     }
 
+    public void sortDate(boolean descending)
+    {
+        ArrayList<Movie> newArr = new ArrayList<Movie>();
+        // Keep going until main array is empty.
+        while (arr.size() > 0) {
+            // Index of current max or min, depending on sort.
+            int extrema = 0;
+            for (int i=0; i < arr.size(); i++) {
+                // Check sorting method
+                if (descending) {
+                    if (arr.get(extrema).getDate().compareTo(arr.get(i).getDate()) < 0) {
+                        extrema = i;
+                    }
+                } else {
+                    if (arr.get(extrema).getDate().compareTo(arr.get(i).getDate()) > 0) {
+                        extrema = i;
+                    }
+                }
+            }
+            newArr.add(arr.get(extrema));
+            arr.remove(extrema);
+        }
+        // Swap the arrays.
+        arr = newArr;
+    }
+    
     /**
      * Sorts the database by rating.
      * @param ascending If true, sorts ascending (lowest to highest). If false, sorts descending (highest to lowest).

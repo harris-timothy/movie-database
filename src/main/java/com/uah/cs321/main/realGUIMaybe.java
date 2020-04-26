@@ -36,11 +36,17 @@ import main.java.com.uah.cs321.movie_database.database.Movie;
  * @author Quen Parson
  */
 public class realGUIMaybe {
+    static boolean flipDate = true;
+    static boolean flipTitle = true;
+    static boolean dateSort = false;
+    static boolean titleSort = false;
     public static void main(String[] args){
         String path = System.getProperty("user.dir");
         String pathSep = File.separator + "src" + File.separator + "main" + File.separator + "resources" + File.separator;
         String fileName = "MovieDataTrimmed.csv";
         String finalFile = path  + pathSep + fileName;
+        //boolean flip = true;
+        
         System.out.println(finalFile);
         MovieDatabase moviesObj = new MovieDatabase();
         try {
@@ -48,10 +54,19 @@ public class realGUIMaybe {
         } catch (FileNotFoundException ex) {
             Logger.getLogger(realGUIMaybe.class.getName()).log(Level.SEVERE, null, ex);
         }
+        
+        DefaultListModel listModel = new DefaultListModel();
+        moviesObj.sortTitle(true); // Default sort by ascending alphabetical order
+        for (int i = 0; i < moviesObj.arr.size(); i++)
+        {
+            listModel.addElement(moviesObj.arr.get(i));
+        }
         Movie tempArr[] = new Movie[moviesObj.arr.size()];
-        moviesObj.sortTitle(true);
         moviesObj.arr.toArray(tempArr);
-        JList<Movie> movieList = new JList<Movie>(tempArr);
+        //tempArr.getTitle();
+        //JList<Movie> movieList = new JList<Movie>(tempArr);
+        JList<Movie> movieList = new JList<Movie>(listModel);
+        
         JFrame mainFrame = new JFrame("Main Frame");
         JFrame descriptionFrame = new JFrame("Movie Description");
         JFrame searchResultsFrame = new JFrame("Search Results");
@@ -63,6 +78,8 @@ public class realGUIMaybe {
         JLabel searchLabel = new JLabel();
         JTextField mainTextField= new JTextField(50);
         JButton searchButton = new JButton("GO");
+        JButton sortDateButton = new JButton("SORT - Date");
+        JButton sortTitleButton = new JButton("SORT - Title");
         JButton quitButton = new JButton("QUIT");
 //---------------------------------------------------------------------------------       
         mainPanel.setLayout(null);
@@ -74,12 +91,63 @@ public class realGUIMaybe {
         descriptionFrame.setResizable(false);
         searchResultsFrame.setResizable(false);
         searchButton.setBackground(Color.white);
+        sortDateButton.setBackground(Color.white);
+        sortTitleButton.setBackground(Color.white);
         mainPanel.setBorder(BorderFactory.createLineBorder(Color.black));
         //movieList.setBorder(BorderFactory.createLineBorder(Color.black));
 //---------------------------------------------------------------------------------
         //New button sort stuff (TIM)
 
+        sortDateButton.addActionListener(e->{
+            moviesObj.sortTitle(true);
+            if(flipDate == true)
+            {
+                moviesObj.sortDate(true);
+                listModel.removeAllElements();
+                for (int i = 0; i < moviesObj.arr.size(); i++)
+                {
+                    listModel.addElement(moviesObj.arr.get(i));
+                }
+                flipDate = false;
+            }
+            else
+            {
+               moviesObj.sortDate(false);
+               listModel.removeAllElements();
+                for (int i = 0; i < moviesObj.arr.size(); i++)
+                {
+                    listModel.addElement(moviesObj.arr.get(i));
+                }
+                flipDate = true;
+            }
+            titleSort = false;
+            //dateSort = true;
+        });
 
+        sortTitleButton.addActionListener(e->{
+           if(flipTitle == true)
+            {
+                moviesObj.sortTitle(false);
+                listModel.removeAllElements();
+                for (int i = 0; i < moviesObj.arr.size(); i++)
+                {
+                    listModel.addElement(moviesObj.arr.get(i));
+                }
+                flipTitle = false;
+            }
+           else
+            {
+               moviesObj.sortTitle(true);
+               listModel.removeAllElements();
+                for (int i = 0; i < moviesObj.arr.size(); i++)
+                {
+                    listModel.addElement(moviesObj.arr.get(i));
+                }
+                flipTitle = true;
+            }
+            dateSort = false;
+            //titleSort = true;
+        });
 
 
 
@@ -88,8 +156,10 @@ public class realGUIMaybe {
 	mainLabel.setBounds(400, 0, 100, 60);
 	textLabel.setBounds(100, 110, 200, 100);
         searchButton.setBounds(550, 20, 60, 20);
+        sortDateButton.setBounds(20, 25, 195, 20);
+        sortTitleButton.setBounds(219, 25, 200, 20);
 	mainTextField.setBounds(450, 20, 100, 20); 
-        scrollPane.setBounds(20, 15, 415, 300);
+        scrollPane.setBounds(20, 45, 415, 550);
         quitButton.setBounds(550, 20, 60, 20);
 //--------------------------------------------------------------------------------- 
         searchButton.addActionListener(e->{
@@ -107,6 +177,8 @@ public class realGUIMaybe {
 //--------------------------------------------------------------------------------- 
 	mainPanel.add(mainTextField);
         mainPanel.add(searchButton);
+        mainPanel.add(sortDateButton);
+        mainPanel.add(sortTitleButton);
         mainFrame.setContentPane(mainPanel);
         searchResultsFrame.setContentPane(searchPanel);
         descriptionFrame.setContentPane(descriptionPanel);
