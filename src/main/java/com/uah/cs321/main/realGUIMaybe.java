@@ -51,7 +51,7 @@ public class realGUIMaybe {
         Movie tempArr[] = new Movie[moviesObj.arr.size()];
         moviesObj.arr.toArray(tempArr);
         JList<Movie> movieList = new JList<Movie>(tempArr);
-        movieList.setBounds(20, 15, 300, 300);
+        //movieList.setBounds(20, 15, 300, 300);
         
         JFrame mainFrame = new JFrame("Main Frame");
         JFrame descriptionFrame = new JFrame("Movie Description");
@@ -67,10 +67,11 @@ public class realGUIMaybe {
         JButton quitButton = new JButton("QUIT");
         mainPanel.setLayout(null);
         JScrollPane scrollPane = new JScrollPane(movieList);
+        scrollPane.setBounds(20, 15, 415, 300);
         Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
         int height = screenSize.height;
-        scrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
-        scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
+        //scrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
+        //scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
         
         
         mainFrame.setResizable(false);
@@ -78,14 +79,13 @@ public class realGUIMaybe {
         searchResultsFrame.setResizable(false);
         searchButton.setBackground(Color.white);
         mainPanel.setBorder(BorderFactory.createLineBorder(Color.black));
-        movieList.setBorder(BorderFactory.createLineBorder(Color.black));
+        //movieList.setBorder(BorderFactory.createLineBorder(Color.black));
 //---------------------------------------------------------------------------------
         mainFrame.setContentPane(mainPanel);
         searchResultsFrame.setContentPane(searchPanel);
         descriptionFrame.setContentPane(descriptionPanel);
         searchPanel.add(searchLabel);
         searchPanel.add(quitButton);
-        
         mainFrame.add(scrollPane);
 
        
@@ -103,7 +103,7 @@ public class realGUIMaybe {
         searchButton.setBounds(550, 20, 60, 20);
 	mainTextField.setBounds(450, 20, 100, 20); 
         
-        movieList.setBounds(20, 15, 300, 300);
+        //movieList.setBounds(20, 15, 300, 300);
         quitButton.setBounds(550, 20, 60, 20);
  //--------------------------------------------------------------------------------- 
         /*mainTextField.addKeyListener(new KeyAdapter() {
@@ -138,7 +138,7 @@ public class realGUIMaybe {
         */
         mainFrame.setContentPane(mainPanel);
         //mainPanel.add(scrollPane);
-        mainPanel.add(movieList);
+        //mainPanel.add(movieList);
         mainPanel.add(searchButton);
         mainPanel.add(mainLabel);
         mainPanel.add(textLabel);
