@@ -47,7 +47,7 @@ public class realGUIMaybe {
         JList<Movie> movieList = new JList<Movie>(tempArr);
         movieList.setBounds(20, 15, 300, 300);
         
- JFrame mainFrame = new JFrame("Main Frame");
+        JFrame mainFrame = new JFrame("Main Frame");
         JFrame descriptionFrame = new JFrame("Movie Description");
         JFrame searchResultsFrame = new JFrame("Search Results");
         JPanel descriptionPanel = new JPanel();
