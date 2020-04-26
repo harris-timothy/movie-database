@@ -57,6 +57,7 @@ public class realGUIMaybe {
             Logger.getLogger(realGUIMaybe.class.getName()).log(Level.SEVERE, null, ex);
         } 
         DefaultListModel listModel = new DefaultListModel();
+        DefaultListModel resultsModel = new DefaultListModel();
         moviesObj.sortTitle(true); // Default sort by ascending alphabetical order
         for (int i = 0; i < moviesObj.arr.size(); i++){
             listModel.addElement(moviesObj.arr.get(i));
@@ -66,7 +67,7 @@ public class realGUIMaybe {
         //tempArr.getTitle();
         //JList<Movie> movieList = new JList<Movie>(tempArr);
         JList<Movie> movieList = new JList<Movie>(listModel);
-        
+        JList<Movie> resultsList = new JList<Movie>(resultsModel);
         JFrame mainFrame = new JFrame("Main Frame");
         JFrame descriptionFrame = new JFrame("Movie Description");
         JFrame searchResultsFrame = new JFrame("Search Results");
@@ -88,6 +89,7 @@ public class realGUIMaybe {
         searchPanel.setLayout(null);
         descriptionPanel.setLayout(null);
         JScrollPane scrollPane = new JScrollPane(movieList);
+        JScrollPane scrollResults = new JScrollPane(resultsList);
         Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
         int height = screenSize.height;
         searchLabel.setText("RESULTS...");
@@ -156,7 +158,7 @@ public class realGUIMaybe {
         scrollPane.setBounds(20, 45, 415, 550);
         quitButton.setBounds(550, 20, 60, 20);
         trueLabel.setText(text + " was found!");
-           trueLabel.setBounds(300, 50, 300, 100);
+           trueLabel.setBounds(300, 575, 300, 100);
            falseLabel.setText("0 RESULTS");
            falseLabel.setBounds(300, 60, 300, 100);
            
@@ -180,24 +182,36 @@ public class realGUIMaybe {
                    
                }
            }
-           getNum = result.size();
-           trueLabel.setText(getNum + " results found.");
+            getNum = result.size();
+            trueLabel.setText(getNum + " results found.");
            
-               System.out.println(isFound);
-              if(isFound == false){
-                   searchPanel.remove(trueLabel);
-                   searchPanel.add(falseLabel);
-               }
-              searchPanel.add(trueLabel);
-              
-           searchResultsFrame.setDefaultCloseOperation(searchResultsFrame.DISPOSE_ON_CLOSE);
-           searchResultsFrame.setSize(700, 700);
-           searchResultsFrame.setLocationRelativeTo(null);
-           searchResultsFrame.setVisible(true);
+            if(isFound == true)
+            {
+                for (int i = 0; i < result.size(); i++){
+                    resultsModel.addElement(result.get(i));
+                }
+                Movie tempResults[] = new Movie[result.size()];
+                result.toArray(tempResults);
+                scrollResults.setBounds(20, 45, 415, 550);
+                searchResultsFrame.add(scrollResults);
+                searchPanel.add(trueLabel);
+            }
+            
+            if(isFound == false){
+                searchPanel.remove(trueLabel);
+                searchPanel.add(falseLabel);
+                searchResultsFrame.remove(scrollResults);
+            }
+            
+            searchResultsFrame.setDefaultCloseOperation(searchResultsFrame.DISPOSE_ON_CLOSE);
+            searchResultsFrame.setSize(700, 700);
+            searchResultsFrame.setLocationRelativeTo(null);
+            searchResultsFrame.setVisible(true);
         });
 //--------------------------------------------------------------------------------- 
         quitButton.addActionListener(e->{
                 searchResultsFrame.dispose();
+                resultsModel.removeAllElements();
         });
 //--------------------------------------------------------------------------------- 
 	mainPanel.add(mainTextField);
@@ -218,5 +232,5 @@ public class realGUIMaybe {
         mainFrame.setSize(700, 700);
         mainFrame.setLocationRelativeTo(null);
         mainFrame.setVisible(true);
-} 
+    } 
 }
