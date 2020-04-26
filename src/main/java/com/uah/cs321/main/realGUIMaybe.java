@@ -57,6 +57,8 @@ public class realGUIMaybe {
         String pathSep = File.separator + "src" + File.separator + "main" + File.separator + "resources" + File.separator;
         String fileName = "MovieDataTrimmed.csv";
         String finalFile = path  + pathSep + fileName;
+        //String favesName = "Favorites.csv";
+        
         System.out.println(finalFile);
         MovieDatabase moviesObj = new MovieDatabase();
         try {
@@ -90,6 +92,7 @@ public class realGUIMaybe {
         JLabel searchPrompt = new JLabel();
         JTextField mainTextField= new JTextField(50);
         JButton addMovieButton = new JButton("Add Movie");
+        JButton addFavoritesButton = new JButton("Add to Favorites");
         JButton searchButton = new JButton("GO");
         JButton sortDateButton = new JButton("SORT - Year");
         JButton sortTitleButton = new JButton("SORT - Title");
@@ -113,6 +116,7 @@ public class realGUIMaybe {
         sortDateButton.setBackground(Color.white);
         sortTitleButton.setBackground(Color.white);
         addMovieButton.setBackground(Color.white);
+        addFavoritesButton.setBackground(Color.white);
         mainPanel.setBorder(BorderFactory.createLineBorder(Color.black));      
 //---------------------------------------------------------------------------------
         //New button sort stuff (TIM)
@@ -176,7 +180,7 @@ public class realGUIMaybe {
                     String starString = "";
                     String ratingString = Float.toString(trueRating);
                     currentTitle.setFont(new Font("Arial", Font.BOLD + Font.ITALIC, 24));                   
-                    currentTitle.setBounds(10, 0, 500, 60);
+                    currentTitle.setBounds(10, 0, 450, 60);
                     currentTitle.setText(moviesObj.arr.get(index).getTitle());
                     currentYear.setFont(new Font("Arial", Font.PLAIN, 18));
                     currentYear.setBounds(10,25,500,60);
@@ -195,7 +199,7 @@ public class realGUIMaybe {
                     descriptionPanel.add(currentYear);
                     descriptionPanel.add(currentRating);
                     descriptionPanel.add(currentBoxOffice);
-                    descriptionFrame.setSize(700,400);
+                    descriptionFrame.setSize(500,300);
                     descriptionFrame.setLocationRelativeTo(null);
                     descriptionFrame.setVisible(true);                  
                 }
@@ -281,7 +285,25 @@ public class realGUIMaybe {
                 
             }
         });
+//---------------------------------------------------------------------------------
+// FAVORITES FAVORITES FAVORITES FAVORITES FAVORITES
 //--------------------------------------------------------------------------------- 
+        System.out.println(favoritesList.getModel().getSize());
+         addFavoritesButton.addActionListener(e->{
+             if (favoritesList.getModel().getSize() == 0)
+             {
+                 
+             }
+             else
+             {
+                 for(int i = 0; i < favoritesList.getModel().getSize(); i++)
+                {
+                    
+                }
+             }
+                 
+        });     
+//---------------------------------------------------------------------------------
         Border blackline = BorderFactory.createLineBorder(Color.black);
         mainPanel.setBorder(blackline);         
 	mainPanel.add(mainTextField);
