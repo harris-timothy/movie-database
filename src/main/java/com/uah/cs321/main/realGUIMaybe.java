@@ -155,7 +155,7 @@ public class realGUIMaybe {
                 flipTitle = true;
             }
             dateSort = false;
-        });     
+        });    
 //---------------------------------------------------------------------------------
         JLabel currentTitle = new JLabel();
         JLabel currentYear = new JLabel();
