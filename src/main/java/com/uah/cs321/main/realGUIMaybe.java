@@ -185,7 +185,7 @@ public class realGUIMaybe {
            trueLabel.setText(text + " was found!");
            for(int i = 0; i < tempArr.length; i++ ){
                //isFound = false;
-               if((tempArr[i].getTitle()).equals(text)){
+               if((tempArr[i].getTitle()).contains(text)){
                    isFound = true;
                    break;
                }
@@ -195,7 +195,6 @@ public class realGUIMaybe {
                    searchPanel.remove(falseLabel);
                    searchPanel.add(trueLabel);
                    
-             
                }
                else if(isFound == false){
                    searchPanel.remove(trueLabel);
