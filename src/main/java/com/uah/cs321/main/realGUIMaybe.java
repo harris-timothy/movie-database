@@ -52,27 +52,49 @@ public class realGUIMaybe {
     static boolean flipTitle = true;
     static boolean dateSort = false;
     static boolean titleSort = false;
+    static boolean duplicate = false;
+    static int index = 0;
+    static boolean removeButton = false;
     public static void main(String[] args){
         String path = System.getProperty("user.dir");
         String pathSep = File.separator + "src" + File.separator + "main" + File.separator + "resources" + File.separator;
         String fileName = "MovieDataTrimmed.csv";
         String finalFile = path  + pathSep + fileName;
-        //String favesName = "Favorites.csv";
+        String favesName = "Favorites.csv";
+        String favesFile = path + pathSep + favesName;
         
-        System.out.println(finalFile);
+        //System.out.println(finalFile);
         MovieDatabase moviesObj = new MovieDatabase();
+        MovieDatabase favesObj = new MovieDatabase();
+        //MovieDatabase resultsObj = new MovieDatabase();
         try {
             moviesObj.populate(finalFile);
         } catch (FileNotFoundException ex) {
             Logger.getLogger(realGUIMaybe.class.getName()).log(Level.SEVERE, null, ex);
         } 
+        
+        try {
+            favesObj.populate(favesFile);
+        } catch (FileNotFoundException ex) {
+            Logger.getLogger(realGUIMaybe.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
         DefaultListModel listModel = new DefaultListModel();
         DefaultListModel favoritesModel = new DefaultListModel();
         DefaultListModel resultsModel = new DefaultListModel();
         moviesObj.sortTitle(true); // Default sort by ascending alphabetical order
+        favesObj.sortTitle(true);
         for (int i = 0; i < moviesObj.arr.size(); i++){
             listModel.addElement(moviesObj.arr.get(i));
         }
+        for (int i = 0; i < favesObj.arr.size(); i++)
+        {
+            favoritesModel.addElement(favesObj.arr.get(i));
+        }
+        
+        //ArrayList<Movie> favesToAdd = new ArrayList<Movie>();
+        ArrayList<Movie> result = new ArrayList<Movie>();
+        
         Movie tempArr[] = new Movie[moviesObj.arr.size()];
         moviesObj.arr.toArray(tempArr);
         JList<Movie> movieList = new JList<Movie>(listModel);
@@ -81,6 +103,8 @@ public class realGUIMaybe {
         JFrame mainFrame = new JFrame("Main Frame");
         JFrame descriptionFrame = new JFrame("Movie Description");
         JFrame searchResultsFrame = new JFrame("Search Results");
+        JFrame errorFrame = new JFrame("ERROR");
+        JPanel errorPanel = new JPanel();
         JPanel descriptionPanel = new JPanel();
         JPanel mainPanel = new JPanel();
         JPanel searchPanel = new JPanel();
@@ -93,6 +117,9 @@ public class realGUIMaybe {
         JTextField mainTextField= new JTextField(50);
         JButton addMovieButton = new JButton("Add Movie");
         JButton addFavoritesButton = new JButton("Add to Favorites");
+        JButton removeFavoritesButton = new JButton("Remove from Favorites");
+        JButton resultsFavoritesButton = new JButton("Add to Favorites");
+        JButton errorClose = new JButton("CLOSE");
         JButton searchButton = new JButton("GO");
         JButton sortDateButton = new JButton("SORT - Year");
         JButton sortTitleButton = new JButton("SORT - Title");
@@ -112,6 +139,7 @@ public class realGUIMaybe {
         mainFrame.setResizable(false);
         descriptionFrame.setResizable(false);
         searchResultsFrame.setResizable(false);
+        errorClose.setBackground(Color.white);
         searchButton.setBackground(Color.white);
         sortDateButton.setBackground(Color.white);
         sortTitleButton.setBackground(Color.white);
@@ -131,8 +159,8 @@ public class realGUIMaybe {
                 flipDate = false;
             }
             else{
-               moviesObj.sortDate(false);
-               listModel.removeAllElements();
+                moviesObj.sortDate(false);
+                listModel.removeAllElements();
                 for (int i = 0; i < moviesObj.arr.size(); i++)
                 {
                     listModel.addElement(moviesObj.arr.get(i));
@@ -171,7 +199,10 @@ public class realGUIMaybe {
                 JList list = (JList)evt.getSource();
                 if (evt.getButton() == MouseEvent.BUTTON1 && evt.getClickCount() == 2) {
                     // Double-click detected
-                    int index = list.getSelectedIndex();
+                    index = list.getSelectedIndex();
+                    System.out.println("movieList");
+                    descriptionPanel.remove(removeFavoritesButton);
+                    
                     //System.out.println("double-click"); 
                     float trueRating = (float)moviesObj.arr.get(index).getRating()/10;
                     BigDecimal accBoxOffice = BigDecimal.valueOf(moviesObj.arr.get(index).getBoxOffice());
@@ -195,16 +226,120 @@ public class realGUIMaybe {
                     currentBoxOffice.setFont(new Font("Arial", Font.PLAIN, 18));
                     currentBoxOffice.setBounds(10,65,500,60);
                     currentBoxOffice.setText("Box Office Returns: $" + Integer.toString(trueBoxOffice));
+                    addFavoritesButton.setBounds(250, 200, 200, 40);
                     descriptionPanel.add(currentTitle);
                     descriptionPanel.add(currentYear);
                     descriptionPanel.add(currentRating);
                     descriptionPanel.add(currentBoxOffice);
+                    
+                    
+                    
+                    descriptionPanel.add(addFavoritesButton);
+                    descriptionFrame.setDefaultCloseOperation(descriptionFrame.DISPOSE_ON_CLOSE);
                     descriptionFrame.setSize(500,300);
                     descriptionFrame.setLocationRelativeTo(null);
                     descriptionFrame.setVisible(true);                  
                 }
             }
         });        
+        
+        addFavoritesButton.addActionListener(e->{
+            //System.out.println(index);
+            //System.out.println(moviesObj.arr.get(index));
+                        
+            duplicate = false;
+            for(int i = 0; i < favesObj.arr.size(); i++)
+            {
+                if(favesObj.arr.get(i).getTitle().equals(moviesObj.arr.get(index).getTitle()))
+                {
+                    // System.out.println("duplicate found");
+                    duplicate = true;
+                    break;
+                }
+                    // System.out.println("inside for loop " + duplicate);
+            }
+            // System.out.println("outside for loop " + duplicate);
+            if(duplicate == false)
+            {
+                // System.out.println("inside if " + duplicate);
+                // System.out.println("no duplicate");
+                favesObj.appendEntry(moviesObj.arr.get(index));
+                //favesToAdd.add(moviesObj.arr.get(index));
+                favesObj.export(favesFile);
+                favoritesModel.removeAllElements();
+                for (int i = 0; i < favesObj.arr.size(); i++){
+                    favoritesModel.addElement(favesObj.arr.get(i));
+                }
+            }
+            else
+            {
+                // System.out.println("inside else " + duplicate);
+                // System.out.println("error panel");
+                
+                errorFrame.setVisible(true);
+            }
+                 
+        });    
+        
+        removeFavoritesButton.addActionListener(e->{
+            //System.out.println(index);
+            //System.out.println(moviesObj.arr.get(index));
+                        
+            favesObj.removeEntry(index);
+            favesObj.export(favesFile);
+            favoritesModel.removeAllElements();
+            for (int i = 0; i < favesObj.arr.size(); i++){
+                favoritesModel.addElement(favesObj.arr.get(i));
+            }
+            descriptionFrame.dispose();
+        });    
+        
+        favoritesList.addMouseListener(new MouseAdapter() {
+            public void mouseClicked(MouseEvent evt) {
+                JList list = (JList)evt.getSource();
+                if (evt.getButton() == MouseEvent.BUTTON1 && evt.getClickCount() == 2) {
+                    // Double-click detected
+                    index = list.getSelectedIndex();
+                    System.out.println("favoritesList");
+                    descriptionPanel.remove(addFavoritesButton);
+                    
+                    //System.out.println("double-click"); 
+                    float trueRating = (float)favesObj.arr.get(index).getRating()/10;
+                    BigDecimal accBoxOffice = BigDecimal.valueOf(favesObj.arr.get(index).getBoxOffice());
+                    int trueBoxOffice = accBoxOffice.multiply(new BigDecimal(100)).intValue() * 10000;
+                    //System.out.println(trueBoxOffice);
+                    String starString = "";
+                    String ratingString = Float.toString(trueRating);
+                    currentTitle.setFont(new Font("Arial", Font.BOLD + Font.ITALIC, 24));                   
+                    currentTitle.setBounds(10, 0, 450, 60);
+                    currentTitle.setText(favesObj.arr.get(index).getTitle());
+                    currentYear.setFont(new Font("Arial", Font.PLAIN, 18));
+                    currentYear.setBounds(10,25,500,60);
+                    currentYear.setText(favesObj.arr.get(index).getDate().toString());
+                    for(int i = 0; i < Math.round(trueRating); i++)
+                    {
+                        starString = starString + "*";
+                    }
+                    currentRating.setFont(new Font("Arial", Font.PLAIN, 18));
+                    currentRating.setBounds(10,45,500,60);
+                    currentRating.setText("Rating: " + starString + "(" + ratingString + ")");
+                    currentBoxOffice.setFont(new Font("Arial", Font.PLAIN, 18));
+                    currentBoxOffice.setBounds(10,65,500,60);
+                    currentBoxOffice.setText("Box Office Returns: $" + Integer.toString(trueBoxOffice));
+                    removeFavoritesButton.setBounds(250, 200, 200, 40);
+                    descriptionPanel.add(currentTitle);
+                    descriptionPanel.add(currentYear);
+                    descriptionPanel.add(currentRating);
+                    descriptionPanel.add(currentBoxOffice);
+                    descriptionPanel.add(removeFavoritesButton);
+                    descriptionFrame.setDefaultCloseOperation(descriptionFrame.DISPOSE_ON_CLOSE);
+                    descriptionFrame.setSize(500,300);
+                    descriptionFrame.setLocationRelativeTo(null);
+                    descriptionFrame.setVisible(true);                  
+                }
+            }
+        });        
+        
 //---------------------------------------------------------------------------------
         //Main window components
         searchLabel.setBounds(10, 0, 100, 60);
@@ -233,7 +368,7 @@ public class realGUIMaybe {
         falseLabel.setForeground(Color.DARK_GRAY);
         falseLabel.setBounds(300, 60, 300, 100);          
 //--------------------------------------------------------------------------------- 
-        ArrayList<Movie> result = new ArrayList<Movie>();
+        
         searchButton.addActionListener(e->{
            result.clear();
            boolean isFound = false;
@@ -268,7 +403,94 @@ public class realGUIMaybe {
             searchResultsFrame.setSize(700, 700);
             searchResultsFrame.setLocationRelativeTo(null);
             searchResultsFrame.setVisible(true);
-        });       
+        });     
+        
+        resultsList.addMouseListener(new MouseAdapter() {
+            public void mouseClicked(MouseEvent evt) {
+                JList list = (JList)evt.getSource();
+                if (evt.getButton() == MouseEvent.BUTTON1 && evt.getClickCount() == 2) {
+                    // Double-click detected
+                    index = list.getSelectedIndex();
+                    System.out.println(result.get(index));
+                    
+                    //System.out.println("double-click"); 
+                    float trueRating = (float)result.get(index).getRating()/10;
+                    BigDecimal accBoxOffice = BigDecimal.valueOf(result.get(index).getBoxOffice());
+                    int trueBoxOffice = accBoxOffice.multiply(new BigDecimal(100)).intValue() * 10000;
+                    //System.out.println(trueBoxOffice);
+                    String starString = "";
+                    String ratingString = Float.toString(trueRating);
+                    currentTitle.setFont(new Font("Arial", Font.BOLD + Font.ITALIC, 24));                   
+                    currentTitle.setBounds(10, 0, 450, 60);
+                    currentTitle.setText(result.get(index).getTitle());
+                    currentYear.setFont(new Font("Arial", Font.PLAIN, 18));
+                    currentYear.setBounds(10,25,500,60);
+                    currentYear.setText(result.get(index).getDate().toString());
+                    for(int i = 0; i < Math.round(trueRating); i++)
+                    {
+                        starString = starString + "*";
+                    }
+                    currentRating.setFont(new Font("Arial", Font.PLAIN, 18));
+                    currentRating.setBounds(10,45,500,60);
+                    currentRating.setText("Rating: " + starString + "(" + ratingString + ")");
+                    currentBoxOffice.setFont(new Font("Arial", Font.PLAIN, 18));
+                    currentBoxOffice.setBounds(10,65,500,60);
+                    currentBoxOffice.setText("Box Office Returns: $" + Integer.toString(trueBoxOffice));
+                    resultsFavoritesButton.setBounds(250, 200, 200, 40);
+                    descriptionPanel.add(currentTitle);
+                    descriptionPanel.add(currentYear);
+                    descriptionPanel.add(currentRating);
+                    descriptionPanel.add(currentBoxOffice);
+                    
+                    
+                    
+                    descriptionPanel.add(resultsFavoritesButton);
+                    descriptionFrame.setDefaultCloseOperation(descriptionFrame.DISPOSE_ON_CLOSE);
+                    descriptionFrame.setSize(500,300);
+                    descriptionFrame.setLocationRelativeTo(null);
+                    descriptionFrame.setVisible(true);                  
+                }
+            }
+        });        
+       
+        resultsFavoritesButton.addActionListener(e->{
+            //System.out.println(index);
+            //System.out.println(moviesObj.arr.get(index));
+                        
+            duplicate = false;
+            for(int i = 0; i < favesObj.arr.size(); i++)
+            {
+                if(favesObj.arr.get(i).getTitle().equals(result.get(index).getTitle()))
+                {
+                    // System.out.println("duplicate found");
+                    duplicate = true;
+                    break;
+                }
+                    // System.out.println("inside for loop " + duplicate);
+            }
+            // System.out.println("outside for loop " + duplicate);
+            if(duplicate == false)
+            {
+                // System.out.println("inside if " + duplicate);
+                // System.out.println("no duplicate");
+                favesObj.appendEntry(result.get(index));
+                //favesToAdd.add(moviesObj.arr.get(index));
+                favesObj.export(favesFile);
+                favoritesModel.removeAllElements();
+                for (int i = 0; i < favesObj.arr.size(); i++){
+                    favoritesModel.addElement(favesObj.arr.get(i));
+                }
+            }
+            else
+            {
+                // System.out.println("inside else " + duplicate);
+                // System.out.println("error panel");
+                
+                errorFrame.setVisible(true);
+            }
+                 
+        });     
+        
 //--------------------------------------------------------------------------------- 
         quitButton.addActionListener(e->{
                 searchResultsFrame.dispose();
@@ -286,28 +508,35 @@ public class realGUIMaybe {
             }
         });
 //---------------------------------------------------------------------------------
-// FAVORITES FAVORITES FAVORITES FAVORITES FAVORITES
-//--------------------------------------------------------------------------------- 
-        System.out.println(favoritesList.getModel().getSize());
-         addFavoritesButton.addActionListener(e->{
-             if (favoritesList.getModel().getSize() == 0)
-             {
-                 
-             }
-             else
-             {
-                 for(int i = 0; i < favoritesList.getModel().getSize(); i++)
-                {
-                    
-                }
-             }
-                 
+        errorClose.addActionListener(e->{
+                errorFrame.dispose();
         });     
+         
 //---------------------------------------------------------------------------------
         Border blackline = BorderFactory.createLineBorder(Color.black);
         mainPanel.setBorder(blackline);         
 	mainPanel.add(mainTextField);
         //searchFrame.add(trueLabel);
+        errorPanel.setLayout(null);
+        errorFrame.setResizable(false);
+        JLabel errorHeader = new JLabel();
+        JLabel errorDesc = new JLabel();
+        errorHeader.setText("ERROR:");
+        errorDesc.setText("Movie already exists in Favorites List.");
+        errorHeader.setFont(new Font("Arial", Font.BOLD + Font.ITALIC, 24));
+        errorDesc.setFont(new Font("Arial", Font.PLAIN, 18));
+        errorHeader.setForeground(Color.RED);
+        errorHeader.setBounds(10, 10, 300,60);
+        errorDesc.setBounds(10,35,300,60);
+        errorClose.setBounds(250,100,100,50);
+        errorPanel.add(errorClose);
+        errorPanel.add(errorHeader);
+        errorPanel.add(errorDesc);
+        errorFrame.setContentPane(errorPanel);
+        errorFrame.getContentPane().setBackground(Color.lightGray);
+        errorFrame.setDefaultCloseOperation(errorFrame.DISPOSE_ON_CLOSE);
+        errorFrame.setSize(400, 200);
+        errorFrame.setLocationRelativeTo(null);
         mainPanel.add(searchButton);
         mainPanel.add(mainLabel);
         mainPanel.add(favoritesLabel);

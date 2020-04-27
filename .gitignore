@@ -22,3 +22,4 @@ out/
 nbproject/private/private.xml
 nbproject/private/private.properties
 /dist/
+src/main/resources/Favorites.csv
