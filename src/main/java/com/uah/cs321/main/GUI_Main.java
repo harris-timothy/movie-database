@@ -286,7 +286,7 @@ public class GUI_Main {
                     // Double-click detected
                     index = list.getSelectedIndex();
                     System.out.println("favoritesList");
-                    descriptionPanel.remove(addFavoritesButton); 
+                    descriptionPanel.remove(resultsFavoritesButton); 
                     float trueRating = (float)favesObj.arr.get(index).getRating()/10;
                     BigDecimal accBoxOffice = BigDecimal.valueOf(favesObj.arr.get(index).getBoxOffice());
                     int trueBoxOffice = accBoxOffice.multiply(new BigDecimal(100)).intValue() * 10000;
@@ -388,6 +388,7 @@ public class GUI_Main {
                 if (evt.getButton() == MouseEvent.BUTTON1 && evt.getClickCount() == 2) {
                     // Double-click detected
                     index = list.getSelectedIndex();
+                    descriptionPanel.remove(removeFavoritesButton);
                     System.out.println(result.get(index));
                     float trueRating = (float)result.get(index).getRating()/10;
                     BigDecimal accBoxOffice = BigDecimal.valueOf(result.get(index).getBoxOffice());
