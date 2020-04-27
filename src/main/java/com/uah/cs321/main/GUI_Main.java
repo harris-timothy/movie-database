@@ -46,7 +46,7 @@ import main.java.com.uah.cs321.movie_database.database.Movie;
  * @author Riley Arnold
  * @author Quen Parson
  */
-public class realGUIMaybe {
+public class GUI_Main {
     static int getNum = 0;
     static boolean flipDate = true;
     static boolean flipTitle = true;
@@ -71,13 +71,13 @@ public class realGUIMaybe {
         try {
             moviesObj.populate(finalFile);
         } catch (FileNotFoundException ex) {
-            Logger.getLogger(realGUIMaybe.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(GUI_Main.class.getName()).log(Level.SEVERE, null, ex);
         } 
         
         try {
             favesObj.populate(favesFile);
         } catch (FileNotFoundException ex) {
-            Logger.getLogger(realGUIMaybe.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(GUI_Main.class.getName()).log(Level.SEVERE, null, ex);
         }
         
         DefaultListModel listModel = new DefaultListModel();
@@ -120,7 +120,7 @@ public class realGUIMaybe {
         JLabel currentRating = new JLabel();
         JLabel currentBoxOffice = new JLabel();
         JTextField mainTextField= new JTextField(50);
-        JButton addMovieButton = new JButton("Add Movie");
+        //JButton addMovieButton = new JButton("Add Movie");
         JButton addFavoritesButton = new JButton("Add to Favorites");
         JButton removeFavoritesButton = new JButton("Remove from Favorites");
         JButton resultsFavoritesButton = new JButton("Add to Favorites");
@@ -149,7 +149,8 @@ public class realGUIMaybe {
         searchButton.setBackground(Color.white);
         sortDateButton.setBackground(Color.white);
         sortTitleButton.setBackground(Color.white);
-        addMovieButton.setBackground(Color.white);
+        //addMovieButton.setBackground(Color.white);
+        removeFavoritesButton.setBackground(Color.white);
         addFavoritesButton.setBackground(Color.white);
         mainPanel.setBorder(BorderFactory.createLineBorder(Color.black));      
 //---------------------------------------------------------------------------------
@@ -327,7 +328,7 @@ public class realGUIMaybe {
         searchPrompt.setBounds(450, -5, 100, 60);
         trueLabel.setBounds(300, 50, 300, 100);
         searchButton.setBounds(605, 35, 60, 20);
-        addMovieButton.setBounds(335, 600, 100, 50);
+        //addMovieButton.setBounds(335, 600, 100, 50);
         sortDateButton.setBounds(20, 35, 195, 20);
         sortTitleButton.setBounds(219, 35, 200, 20);
 	mainTextField.setBounds(450, 35, 150, 20); 
@@ -507,7 +508,7 @@ public class realGUIMaybe {
         mainPanel.add(sortDateButton);
         mainPanel.add(sortTitleButton);
         mainPanel.add(searchPrompt);
-        mainPanel.add(addMovieButton);
+        //mainPanel.add(addMovieButton);
         mainFrame.setContentPane(mainPanel);
         searchResultsFrame.setContentPane(searchPanel);
         descriptionFrame.setContentPane(descriptionPanel);
