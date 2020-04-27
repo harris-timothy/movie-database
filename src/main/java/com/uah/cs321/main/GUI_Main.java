@@ -287,6 +287,7 @@ public class GUI_Main {
                     index = list.getSelectedIndex();
                     System.out.println("favoritesList");
                     descriptionPanel.remove(resultsFavoritesButton); 
+                    descriptionPanel.remove(addFavoritesButton);
                     float trueRating = (float)favesObj.arr.get(index).getRating()/10;
                     BigDecimal accBoxOffice = BigDecimal.valueOf(favesObj.arr.get(index).getBoxOffice());
                     int trueBoxOffice = accBoxOffice.multiply(new BigDecimal(100)).intValue() * 10000;
